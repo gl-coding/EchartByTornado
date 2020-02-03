@@ -2,13 +2,14 @@
 #coding:utf-8
 
 import tornado.ioloop
-import tornado.web                                              #导入tornado模块下的web文件
+import tornado.web         #导入tornado模块下的web文件
 
 import json
 import os
 
 GLOBAL_CODE_FILE = "log/log.code"
 
+#post get communication, write and read
 def write_code(code):
     filename = GLOBAL_CODE_FILE
     if os.path.exists(filename):
@@ -25,6 +26,7 @@ def read_code():
             res = line.strip()
     return res
 
+#load stock history data
 def read_data(sid):
     path = "../data_id/log." + sid
     res_data = []
@@ -44,6 +46,7 @@ def read_data(sid):
     res_data.reverse()
     return res_data
 
+#return echart init page, receive arg 
 class initPage(tornado.web.RequestHandler):
     global GLOBAL_CODE;
     def get(self):
@@ -57,6 +60,7 @@ class initPage(tornado.web.RequestHandler):
         #print res
         self.render("templete.html")
 
+#return post request
 class updatePage(tornado.web.RequestHandler):
     global GLOBAL_CODE;
     def post(self):
